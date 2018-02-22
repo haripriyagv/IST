@@ -1,0 +1,153 @@
+package Page;
+
+
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+//import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+
+public class demoIE {
+
+	public static void main(String[] args) {
+		
+		System.setProperty("webdriverIE","D:/IEDriverServer.exe");
+		WebDriver driver=new InternetExplorerDriver();
+		
+		driver.get("https://demo.opencart.com/");
+		
+		//____Verify the title_____
+		
+		String expectedTitle="Your Store";
+		String actualTitle=driver.getTitle();
+		try {
+			assertEquals(actualTitle,expectedTitle);
+			System.out.println("Title 'Your Store' verified");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Click on item button
+		driver.findElement(By.xpath(".//*[@id='cart']/button")).click();
+		
+		//Get the message after clicking item button
+		String expectedMessage="Your shopping cart is empty!";
+		String actualMessage=driver.findElement(By.xpath(".//*[@id='cart']/ul/li/p")).getText();
+		try {
+			assertEquals(actualMessage,expectedMessage);
+			System.out.println("Drop Down Message is verified");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Click on contact button
+		driver.findElement(By.xpath(".//*[@id='top-links']/ul/li[1]/a/i")).click();
+		String expectedHeading="Contact Us";
+		String actualHeading=driver.getTitle();
+		
+		//verifing contactUs Title
+		try {
+			assertEquals(actualHeading,expectedHeading);
+			System.out.println("Contact Us Title has verified");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//verifying Telephone
+		String Telephone=driver.findElement(By.xpath(".//*[@id='content']/div/div/div/div[2]")).getText();
+		try {
+			assertEquals(Telephone,"Telephone\n123456789");
+			System.out.println("Telephone verified");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Enter name in textbox
+		driver.findElement(By.xpath(".//*[@id='input-name']")).sendKeys("shanmuga");
+		
+		//Invalid email_id
+		driver.findElement(By.xpath(".//*[@id='input-email']")).sendKeys("1234");
+		
+		//Click on submit button
+		driver.findElement(By.xpath(".//*[@id='content']/form/div/div/input")).click();
+		
+		String actualEmailErrorMessage=driver.findElement(By.xpath(".//*[@id='content']/form/fieldset/div[2]/div/div")).getText();
+		String expectedEmailErrorMessage="E-Mail Address does not appear to be valid!";
+		try {
+			assertEquals(actualEmailErrorMessage,expectedEmailErrorMessage);
+			System.out.println(actualEmailErrorMessage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//To clear the value in email
+		driver.findElement(By.xpath(".//*[@id='input-email']")).clear();
+		//valid email_id
+		driver.findElement(By.xpath(".//*[@id='input-email']")).sendKeys("shanmugaeie13@gmail.com");
+		
+		//Enquiry text
+		driver.findElement(By.xpath(".//*[@id='input-enquiry']")).sendKeys("This is my report");
+		
+		//Click on submit
+		driver.findElement(By.xpath(".//*[@id='content']/form/div/div/input")).click();
+		
+		//Click on Continue
+		driver.findElement(By.xpath(".//*[@id='content']/div/div/a")).click();
+		driver.findElement(By.xpath("html/body/footer/div/div/div[3]/ul/li[1]/a")).click();
+		
+		//Verify title
+		String actualtitle=driver.getTitle();
+		String expectedtitle="Find Your Favorite Brand";
+		try {
+			assertEquals(actualtitle,expectedtitle);
+			System.out.println("Title 'Find Your Favorite Brand' is verified");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Find your title
+		String title=driver.getTitle();
+		System.out.println("Found Title is: "+title);
+		
+		//Click on sony link
+		driver.findElement(By.xpath(".//*[@id='content']/div[5]/div/a")).click();
+		String SonyPrice=driver.findElement(By.xpath(".//*[@id='content']/div[2]/div/div/div[2]/div[1]/p[2]")).getText();
+		System.out.println("Sony Price is: "+SonyPrice);
+		
+		//Click on add to cart button
+		driver.findElement(By.xpath(".//*[@id='content']/div[2]/div/div/div[2]/div[2]/button[1]")).click();
+		
+		try {
+			Thread.sleep(3000);
+			if(driver.findElement(By.xpath(".//*[@id='product-manufacturer']/div[1]")).getText().contentEquals("Success: You have added Sony VAIO to your shopping cart!"))
+			{
+			System.out.println("Item added verified");
+			}
+			else
+			{
+				System.out.println("Item added filed");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
